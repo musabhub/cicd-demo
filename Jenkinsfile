@@ -5,6 +5,7 @@ pipeline {
         apiVersion: v1
         kind: Pod
         spec:
+          serviceAccountName: jenkins-agent
           containers:
           - name: python
             image: python:3.12-slim
@@ -21,6 +22,8 @@ pipeline {
             image: bitnami/kubectl:latest
             command: ["sleep"]
             args: ["infinity"]
+            securityContext:
+              runAsUser: 0
           volumes:
           - name: docker-config
             secret:
